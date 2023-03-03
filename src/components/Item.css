@@ -1,0 +1,18 @@
+.listItem {
+  border-bottom: 1px solid #ccc;
+  padding: 1rem 0;
+  color: #222;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.listItem h3  {
+  padding: 0;
+  margin: 0;
+}
+.completed {
+  text-decoration: line-through;
+  opacity: 0.5;
+}

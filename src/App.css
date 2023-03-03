@@ -1,0 +1,46 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.wrapper {
+  margin: 0 auto;
+  padding-bottom: 1rem;
+  box-sizing: border-box;
+}
+
+.border {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 50px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-bottom: 1px solid #ddd;
+  font-size: 1.2rem;
+  box-sizing: border-box;
+}
