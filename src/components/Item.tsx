@@ -1,8 +1,7 @@
 import './Item.css';
 
 export function TodoItem(props: any) {
-  const onUpdate = (event: any) => {
-  }
+  const onUpdate = (event: any) => {};
 
   return (
     <div className={`listItem ${props.data.status === 'completed' ? ' completed' : ''}`}>
