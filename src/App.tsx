@@ -13,13 +13,10 @@ function App() {
     try {
       fetch('./data/index.json').then(async (value) => {
         let list = await value.json();
-        const isCleared = window.localStorage.getItem('isCleared');
+        const isCleared = false // window.localStorage.getItem('isCleared');
         let checkedList = isCleared ? list.map((item: any) => ({...item, status: 'active' as any})) : list;
-        if (statusList.length) {
-          checkedList = checkedList.filter((item: IItem) => {
-            return statusList.includes(item.status);
-          });
-        }
+        if (statusList.length)
+          checkedList = checkedList.filter((item: IItem) => statusList.includes(item.status));
         setList(checkedList);
       })
     } catch {}
@@ -30,12 +27,10 @@ function App() {
   }
 
   const handleKeyDown = (event: any) => {
-    if (event.key === 'Enter') {
-      if (keyword) {
-        const data = [...list];
-        list.push({ name: keyword, "status": "active" });
-        setList(data);
-      }
+    if (event.key === 'Enter' && keyword) {
+      const data = [...list];
+      list.push({ name: keyword, status: "active" });
+      setList(data);
     }
   }
 
