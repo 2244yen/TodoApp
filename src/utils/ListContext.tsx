@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext } from "react";
 import { IItem } from "./interface";
 
 const ListContext = createContext({

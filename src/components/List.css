@@ -15,3 +15,6 @@ button {
   padding: 5px 10px;
   border-radius: 3px;
 }
+.is-actived {
+  background-color: #ddd;
+}
