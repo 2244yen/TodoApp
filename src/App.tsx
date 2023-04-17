@@ -1,36 +1,48 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { TodoList } from './components/List';
 import { IItem } from './utils/interface';
 import { ListContext } from './utils/ListContext';
+import { getItem, setItem } from './utils/helper';
 
 function App() {
-  const [list, setList] = useState<IItem[]>([]);
-  const [statusList, setStatusList] = useState<string[]>([]);
+  const [list, setListFn] = useState<IItem[]>([]);
   const [keyword, setKeyword] = useState('');
 
+  const fetchList = async () => {
+    const value = await fetch('./data/index.json');
+    return await value.json();
+  }
+
+  const setList = (list: IItem[]) => {
+    setListFn(list);
+    setItem('data', list);
+  }
+
   useEffect(() => {
-    try {
-      fetch('./data/index.json').then(async (value) => {
-        let list = await value.json();
-        const isCleared = false // window.localStorage.getItem('isCleared');
-        let checkedList = isCleared ? list.map((item: any) => ({...item, status: 'active' as any})) : list;
-        if (statusList.length)
-          checkedList = checkedList.filter((item: IItem) => statusList.includes(item.status));
-        setList(checkedList);
-      })
-    } catch {}
-  }, [statusList])
+    (async () => {
+      try {
+        const localList = getItem('data');
+        const list = localList?.length ? localList : await fetchList();
+        setList(list);
+      } catch {}
+      console.log('_________list')
+    })();
+  }, [])
 
   const onFilter = (params: string[] = []) => {
-    setStatusList(params);
+    let clonedList = [...(getItem('data') || [])];
+    if (params.length)
+      clonedList = clonedList.filter((item: IItem) => params.includes(item.status));
+    setListFn(clonedList);
+    console.log(clonedList)
   }
 
   const handleKeyDown = (event: any) => {
     if (event.key === 'Enter' && keyword) {
-      const data = [...list];
       list.push({ name: keyword, status: "active" });
-      setList(data);
+      setList(list);
+      setKeyword('');
     }
   }
 
@@ -43,6 +55,7 @@ function App() {
           <h2 className="text-center">To do app</h2>
           <input
             id="searchInput"
+            value={keyword}
             placeholder="What needs to be done?"
             className="search-input"
             onChange={event => setKeyword(event.target.value)}
